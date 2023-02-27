@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import  { HydratedDocument } from 'mongoose';
 
-export type WarehouseDocument = HydratedDocument<Warehouse>;
+export type ProductDocument = HydratedDocument<Product>;
 
 @Schema({
   timestamps:{
@@ -14,13 +14,16 @@ export type WarehouseDocument = HydratedDocument<Warehouse>;
     transform: (doc, ret)=> {   delete ret._id  }
   }
 })
-export class Warehouse {
+export class Product {
  
   id?:string;
 
   @Prop({required:true})
   name: string;
 
+  @Prop({required:true})
+  price: number;
+
 }
 
-export const WarehouseSchema =  SchemaFactory.createForClass(Warehouse);
+export const ProductSchema =  SchemaFactory.createForClass(Product);
