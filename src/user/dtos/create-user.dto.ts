@@ -1,5 +1,6 @@
 
-import { IsEmail, IsInt, IsNotEmpty, IsPhoneNumber, IsPositive } from "class-validator";
+import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsOptional, IsPhoneNumber, IsPositive, Length } from "class-validator";
+import { UserRolesEnum } from "../schemas/user.schema";
 
 export class CreateUserDto{
     @IsNotEmpty()
@@ -16,6 +17,13 @@ export class CreateUserDto{
     @IsEmail()
     email: string;
   
+   
     @IsPhoneNumber()
     phone: string;
+
+    @IsEnum(UserRolesEnum)
+    role:UserRolesEnum;
+
+    @Length(8,20)
+    passwd: string;
 }

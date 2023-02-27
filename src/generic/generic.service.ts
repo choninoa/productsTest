@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { HydratedDocument, Model, QueryWithHelpers, UpdateWriteOpResult } from 'mongoose';
+import { FilterQuery, HydratedDocument, Model, QueryWithHelpers, UpdateWriteOpResult } from 'mongoose';
 
 
 
@@ -18,8 +18,13 @@ export class GenericService<CLASS, DTO,UDTO> {
     return await this.genericModel.find();
   }
 
-  async findOne(id: string): Promise<CLASS> {
-    return await this.genericModel.findOne({ _id: id });
+  async findOne(query: FilterQuery<CLASS>): Promise<CLASS> {
+    const doc=await this.genericModel.findOne(query,null,{
+      strict:true
+    }).exec();
+      if(!doc)
+      throw new NotFoundException(`${this.genericModel.modelName} not found!`)
+    return doc
   }
 
   async update(id:string,dto: UDTO) {
