@@ -67,7 +67,7 @@ export class UserController implements  GenericController<User,CreateUserDto,Upd
   @ApiUnauthorizedResponse({ description: 'Login Failed' })
   @ApiBody({ type: LoginDTO })
   @Post('login')
-  async loginEmployee(
+  async login(
     @Res() res,
     @Body() loginDto: LoginDTO,
   ): Promise<UserPayload> {

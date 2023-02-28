@@ -141,7 +141,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Preduct",
+					"name": "Delete Product",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -214,6 +214,43 @@
 			"name": "Users",
 			"item": [
 				{
+					"name": "Edit User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \r\n  \"role\":\"ADMIN\"\r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/user/63fd6b96dc7bf9b3ffb4b1b8",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"user",
+								"63fd6b96dc7bf9b3ffb4b1b8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "List Users",
 					"request": {
 						"auth": {
@@ -276,6 +313,34 @@
 							"path": [
 								"user",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/user/63fd6b96dc7bf9b3ffb4b1b8",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"user",
+								"63fd6b96dc7bf9b3ffb4b1b8"
 							]
 						}
 					},
@@ -369,6 +434,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get One User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \r\n  \"counter\": 35\r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/user/63fd6b96dc7bf9b3ffb4b1b8",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"user",
+								"63fd6b96dc7bf9b3ffb4b1b8"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -398,6 +503,35 @@
 							"path": [
 								"warehouse",
 								"findAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products for Specific warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/product/getByWarehouse/63fd6a46bb1eac6b50a50a22",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"product",
+								"getByWarehouse",
+								"63fd6a46bb1eac6b50a50a22"
 							]
 						}
 					},
@@ -434,6 +568,34 @@
 							],
 							"path": [
 								"warehouse"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/warehouse/63fd6b96dc7bf9b3ffb4b1b8",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"warehouse",
+								"63fd6b96dc7bf9b3ffb4b1b8"
 							]
 						}
 					},

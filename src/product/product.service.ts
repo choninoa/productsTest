@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ApiOperation } from '@nestjs/swagger';
 import { FilterQuery, Model } from 'mongoose';
 import { GenericService } from '../generic/generic.service';
 import { Warehouse } from '../warehouse/schemas/warehouse.schema';
@@ -36,5 +37,11 @@ export class ProductService  extends GenericService<Product, CreateProductDTO,Up
             counter:product.counter-count
         })
 
+    }
+    
+    
+    
+    async getProductsByGivenWarehouse(warehouseId:string):Promise<Product[]>{
+        return await this.productModel.find({warehouse:warehouseId})
     }
 }

@@ -62,4 +62,12 @@ export class ProductController  implements GenericController<Product, CreateProd
     async buyProduct(@Param('id',ParseMongoIdPipe) id: string,@Param('units',ParseIntPipe) units: number) {
         return await this.productService.buyProduct(id, units);
     }
+
+    @hasRoles(UserRolesEnum.ADMIN)
+    @UseGuards(RolesGuard)
+    @ApiOperation({summary:'Get products for specific Warehouse'})
+    @Get('getByWarehouse/:warehouseId')
+    async findByWareHouse(@Param('warehouseId',ParseMongoIdPipe) id: string): Promise<Product[]> {
+        return await this.productService.getProductsByGivenWarehouse(id);
+    }
 }
