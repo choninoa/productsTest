@@ -31,10 +31,10 @@ export class User {
   @Prop()
   age?: number;
 
-  @Prop({required:true})
+  @Prop({required:true,unique:true})
   email: string;
 
-  @Prop({required:true})
+  @Prop({required:true,unique:true})
   phone: string;
 
   @Prop({required:true,minlength:8})

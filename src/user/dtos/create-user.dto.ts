@@ -1,5 +1,5 @@
 
-import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsOptional, IsPhoneNumber, IsPositive, Length } from "class-validator";
+import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsOptional, IsPhoneNumber, IsPositive, Length, Min } from "class-validator";
 import { UserRolesEnum } from "../schemas/user.schema";
 
 export class CreateUserDto{
@@ -11,6 +11,7 @@ export class CreateUserDto{
   
     @IsInt()
     @IsPositive()
+    @Min(18)
     age: number;
   
  

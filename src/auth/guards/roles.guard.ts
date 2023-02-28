@@ -18,6 +18,6 @@ export class RolesGuard implements CanActivate {
     if (!roles) {
       return true;
     }
-    return roles.indexOf(user.rol) > -1 || user.rol == UserRolesEnum.ADMIN;
+    return roles.indexOf(user.role) > -1 ;
   }
 }

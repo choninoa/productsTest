@@ -18,7 +18,7 @@ export class Warehouse {
  
   id?:string;
 
-  @Prop({required:true})
+  @Prop({required:true,unique:true})
   name: string;
 
 }

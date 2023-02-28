@@ -1,21 +1,37 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthService, UserPayload } from '../auth/auth.service';
 import { GenericService } from '../generic/generic.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { User, UserDocument } from './schemas/user.schema';
-import { comparePasswd } from '../generic/common'
+import { User, UserDocument, UserRolesEnum } from './schemas/user.schema';
+import { comparePasswd, hashPasswd } from '../generic/common'
 import { LoginDTO } from './dtos/login.dto';
 @Injectable()
-export class UserService extends GenericService<User, CreateUserDto, UpdateUserDto> {
+export class UserService extends GenericService<User, CreateUserDto, UpdateUserDto> implements OnModuleInit {
     constructor(
         @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
         @Inject(AuthService)
         private authService: AuthService,
     ) {
         super(userModel);
+    }
+    async onModuleInit() {
+        const created = await this.userModel.findOne({
+            email: 'admin@admin.com'
+        })
+        if (!created) {
+            await this.create({
+                email: 'admin@admin.com',
+                name: 'Initial Admin',
+                lastName: 'Tester',
+                age: 33,
+                phone: '+17863458634',
+                role: UserRolesEnum.ADMIN,
+                passwd: process.env.INITIAL_PASSW || "administrator123"
+            })
+        }
     }
 
     async validateUser(email: string, password: string): Promise<UserPayload> {
@@ -57,5 +73,24 @@ export class UserService extends GenericService<User, CreateUserDto, UpdateUserD
                 return access;
             }
             )
-        }
+    }
+
+    async create(dto: CreateUserDto): Promise<User> {
+
+        const exists = await this.userModel.findOne({
+            email: dto.email,
+            phone: dto.phone
+        })
+        if (exists)
+            throw new BadRequestException(`Already exists a user with this email or phone`)
+        return await this.userModel.create({
+            ...dto,
+            passwd: await hashPasswd(dto.passwd)
+        })
+        .then(u => {
+                const r=u.toObject();
+                delete r.passwd
+                return r
+            })
+    }
 }
